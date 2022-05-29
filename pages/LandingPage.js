@@ -1,4 +1,3 @@
-import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import {Text, View, StyleSheet, Image, StatusBar,} from "react-native";
 
