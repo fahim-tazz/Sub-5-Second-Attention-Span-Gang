@@ -4,7 +4,7 @@ import { NavigationContainer, StackActions, Group} from '@react-navigation/nativ
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import { LandingPage} from "./pages/LandingPage";
-import { LoginPage } from './pages/LoginPage';
+import { LoginPage} from './pages/LoginPage';
 
 const Stack = createNativeStackNavigator();
 export default function App() {

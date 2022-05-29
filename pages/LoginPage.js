@@ -1,17 +1,27 @@
-import {View, Text, TextInput, StyleSheet} from "react-native";
+import {View, Text, TextInput, StyleSheet, Image} from "react-native";
+
 
 
 const LoginPage = () => {
     return (
         <View style = {styles.loginContainer}>
-            <Text style = {styles.loginTitle}>Log in to readit</Text>
+            <View style = {styles.upperLoginContainer}>
+                <Text style = {styles.loginTitle}>Log in to </Text>
+                <Image 
+                    source = {require("../assets/logo_black.png")}
+                    style = {styles.logo}
+                />
+            </View>
             <TextInput 
-                style = {styles.usernameInputBox}
-                placeholder = {"   Enter your username"}
+                style = {[styles.inputBox, styles.inputPlaceholderText]}
+                placeholder = {"Enter your username"}
+                keyboardType = {"email-address"}
+                autoCapitalize = {"none"}
             />
             <TextInput 
-                style = {styles.passwordInputBox}
-                placeholder = {"   *******"}    
+                style = {[styles.inputBox, styles.inputPlaceholderText]}
+                placeholder = {"Enter your password"}
+                secureTextEntry = {true}
             />
         </View>
     )
@@ -20,24 +30,44 @@ const LoginPage = () => {
 const styles = StyleSheet.create({
     loginContainer: {
         alignItems: "center",
-        marginTop: "75%"
+        marginTop: "73%",
+        height: "42%",
+        // borderWidth: 1,
+
     },
-    usernameInputBox: {
-        height: 50,
-        width: 300,
-        borderWidth: 1,
-    }, 
-    passwordInputBox: {
-        height: 50,
-        width: 300,
-        borderWidth: 1,
-        marginTop: "7%",
-        // backgroundColor: "dodgerblue"
+    upperLoginContainer: {
+        height: "20%",
+        flexDirection: "row",
+        alignItems: "center",
+        // borderWidth: 1,
+        marginBottom: "-3%",
+
+   },
+   loginTitle: {
+       fontSize: 33,
+       fontWeight: "600",
+   },
+   logo: {
+        width: "27%",
+        resizeMode: "contain",
+        marginLeft: "-0.6%",
+        marginBottom: "0.5%",
+
     },
-    loginTitle: {
-        // backgroundColor: "dodgerblue",
-        fontSize: 30,
-        paddingBottom: 30
-    }
+    inputBox: {
+        height: "15%",
+        width: "80%",
+        borderWidth: 1,
+        paddingLeft: "4%",
+        marginTop: "5%",
+    },
+
+    inputPlaceholderText: {
+        fontFamily: "Didot",
+        fontWeight: "400",
+        fontSize: 16,
+    },
+  
 });
+
 export {LoginPage};
