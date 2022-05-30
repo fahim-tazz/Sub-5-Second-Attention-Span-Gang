@@ -1,12 +1,15 @@
 import React from "react";
-import {Text, View, StyleSheet, Image, StatusBar,} from "react-native";
+import {Text, View, StyleSheet, Image, StatusBar, ImageBackground} from "react-native";
+
 
 const LandingPage = (props) => {
     return ( 
         <View style={styles.container}>
-            <Image
+            <ImageBackground
                 source = {require("../assets/landingPage6.png")}
+                style = {{height: "100%", width: "100%"}}
             />
+
             <Text style = {styles.landingSubtitle}>
                 your reading journey starts here
             </Text>
