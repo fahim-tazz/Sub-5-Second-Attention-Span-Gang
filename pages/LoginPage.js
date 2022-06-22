@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     },
 
     inputPlaceholderText: {
-        fontFamily: "Didot",
+        // fontFamily: "Didot",
         fontWeight: "500",
         fontSize: 17.5,
     },
