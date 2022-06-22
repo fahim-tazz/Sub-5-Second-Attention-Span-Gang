@@ -8,11 +8,6 @@ import LargeButton from "../components/LargeButton";
 const LoginPage = () => {
     return (
         <View style = {{backgroundColor: "#dbb49c"}}>
-        <ImageBackground
-            // source = {img}
-            style = {styles.bgImageContainer}
-            imageStyle = {styles.bgImage}
-        >
             <View style = {styles.loginContainer}>
                 <View style = {styles.upperLoginContainer}>
                     <Text style = {styles.loginTitle}>Log in to </Text>
@@ -58,7 +53,6 @@ const LoginPage = () => {
                     </Button>
                 </View>
             </View>
-            </ImageBackground>
             </View>
     )
 }

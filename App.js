@@ -5,6 +5,7 @@ import { createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import { LandingPage} from "./pages/LandingPage";
 import { LoginPage} from './pages/LoginPage';
+import { SearchPage } from "./pages/SearchPage";
 
 
 
@@ -13,9 +14,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-          <Stack.Screen name = "Login" component = {LoginPage} options = {navOptions.loginPage}/>
+          <Stack.Screen name = "Search" component = {SearchPage} options = {navOptions.landingPage}/>
           <Stack.Screen name = "Landing" component = {LandingPage} options = {navOptions.landingPage}/>
-        
+          <Stack.Screen name = "Login" component = {LoginPage} options = {navOptions.loginPage}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
