@@ -1,5 +1,6 @@
 # Sub-5-Second-Attention-Span-Gang
 Orbital Project 2022
+
 Motivation 
 
 You used to be an avid reader as a kid, but now, staring at a page for more than 5 minutes feels like a chore. There are just better, more gratifying things to do with your very limited time now, like social media, Netflix, and anime. But what if there was a way to fuel an intrinsic need to finish that one novel you could never get through? What if this was the book that reignites your long-lost love for reading?
@@ -15,7 +16,6 @@ We want to make a reading tracker where users can enjoy reading with others, sha
 
 User Stories
 
-[Please describe what the users would be able to do with your system.]
 Users can also start a book from the database(possibly using Google Books API) or input their own custom titles and record their progress in terms of number of pages. 
 Users can record and save their annotations and thoughts at different pages.
 Users can add other users and track their progress (eg. daily number of pages read, All-time number of titles read, number of pages for a particular title/series) in comparison with others.
@@ -27,7 +27,6 @@ Users can share their progress and reviews on other platforms like Instagram, Tw
 
 Features and Timeline
 
-[Please list down the key features of your system with a rough timeline for completion.]
 
 The Book Journal will allow Users to save their titles and annotations for books, as well as their reviews and ratings. 
 
@@ -68,7 +67,6 @@ Display side-by-side comparison with user’s friends’ progress
 
 Tech Stack
 
-[Please list down the technologies that you are planning to use.]
 
 1. CSS/Javascript
 2. Python
