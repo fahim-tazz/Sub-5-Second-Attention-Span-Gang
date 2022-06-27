@@ -19,8 +19,8 @@ User Stories
 Users can also start a book from the database(possibly using Google Books API) or input their own custom titles and record their progress in terms of number of pages. 
 Users can record and save their annotations and thoughts at different pages.
 Users can add other users and track their progress (eg. daily number of pages read, All-time number of titles read, number of pages for a particular title/series) in comparison with others.
-Users can write book reviews, discuss fan theories etc. in forums or on their personal profile. They can also leave ratings out of 5 for the titles they have finished that all users can view.
-Badges/Points/Achievements for reading more/engaging in forums more and for different levels of reading achievement (eg. First book read with over 500 pages, Over 200 titles read, Over 100 posts made on forums)
+Users can write book reviews, discuss fan theories etc. in forums or on their personal profile. They can also leave ratings out of 5 for the titles they have finished from them to keep track
+Badges/Points/Achievements for reading more/giving more reviews and for different levels of reading achievement (eg. First book read with over 500 pages, Over 200 titles read, Over 100 posts made on forums)
 People can keep track of the books they have read and a map of the different genres and books they have read can be generated for reference.
 Recommendations based on genres you’ve read before and user ratings.
 Users can share their progress and reviews on other platforms like Instagram, Twitter and Telegram.
@@ -39,13 +39,11 @@ Features to be completed by the mid of July:
 Allow users to save their annotations and custom titles
 Retrieve and display titles and associated annotations 
 Calculate and display collective user rating of titles
-Allow user to add other users as friends
 
 2. Profile Page
 Retrieve and display current title and progress
 Retrieve and display total number of titles read 
 Display user information like username and profile picture
-Display friends of user
 
 
 Features to be completed by the end of July: 
