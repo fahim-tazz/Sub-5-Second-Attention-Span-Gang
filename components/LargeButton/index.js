@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#e0d5ce",
-        
+      
     },
     buttonText: {
-        fontSize: "23",
-        fontWeight: "500"
+        fontSize: 23,
+        fontWeight: "500",
     },
 })
 export default LargeButton;
