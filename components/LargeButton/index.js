@@ -8,7 +8,7 @@ const LargeButton = (props) => {
         <TouchableHighlight 
             
             onPress = {props.onPress}  
-            style = {styles.buttonContainer}
+            style = {[styles.buttonContainer, props.style]}
             activeOpacity = {0.4}
             underlayColor = {"#bfa28f"}
         >
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         borderWidth: 0.3,
         borderRadius: 1000,
-        height: "15%",
+        // height: "15%",
         width: "60%",
         marginTop: "6%",
         alignItems: "center",
