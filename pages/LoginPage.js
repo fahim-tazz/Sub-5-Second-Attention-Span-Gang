@@ -34,7 +34,8 @@ const LoginPage = () => {
                 
                 <LargeButton 
                     buttonName = {"Log in"}
-                    onPress = {() => console.log("logged in")}  //Add login functionality
+                    onPress = {() => console.log("logged in")}
+                    style = {styles.loginButton}  //Add login functionality
                 />
                 <Button
                     title = {"Forgot Password?"}
@@ -113,6 +114,9 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         fontSize: 17.5  ,
         paddingVertical: "5%"
+    },
+    loginButton: {
+        flex: 0.2
     },
     bottomText: {
         alignItems: "center",
