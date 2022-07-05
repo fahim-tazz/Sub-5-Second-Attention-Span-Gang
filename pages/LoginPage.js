@@ -1,6 +1,6 @@
 import React from "react";
 import {View, Text, TextInput, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
-import LargeButton from "../components/LargeButton";
+import {LargeButton} from "../components/LargeButton";
 
 // import {themeColor} from "../App.js";
 

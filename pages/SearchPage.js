@@ -3,18 +3,18 @@ import {View, Text, StyleSheet, TextInput, useWindowDimensions} from "react-nati
 import {LargeButton} from "../components/LargeButton";
 
 const SearchPage = () => {
-    const styles = makestyle(useWindowDimensions().fontScale)
+    // const styles = makestyle(useWindowDimensions().fontScale)
     return (
         <View style = {styles.mainContainer}>
             <TextInput  style = {[styles.searchBar, styles.inputText]}
                         placeholder = {"Search for a book here"}
             />
-            <LargeButton/>
+            <LargeButton buttonName = {"Search"} onPress = {() => console.log("Searched")}/>
         </View>
     )
 }
 
-const makestyle = (scale) => StyleSheet.create({
+const styles = StyleSheet.create({
     mainContainer: {
         alignItems: "center",
         backgroundColor: "#dbb49c",
@@ -31,7 +31,7 @@ const makestyle = (scale) => StyleSheet.create({
         marginTop: "50%",
     },
     inputText: {
-        fontSize: (19 * scale)
+        fontSize: 19
     }
 });
 
