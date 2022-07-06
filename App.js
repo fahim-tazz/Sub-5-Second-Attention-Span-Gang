@@ -15,7 +15,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-          <Stack.Screen name = 'Login' component = {LoginPage} options = {navOptions.loginPage}/>
+          <Stack.Screen name = "Login" component = {LoginPage} options = {navOptions.loginPage}/>
+          <Stack.Screen name = "Search" component = {SearchPage} options = {navOptions.landingPage}/>
+          <Stack.Screen name = "Signup" component = {SignupPage} options = {navOptions.signupPage}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

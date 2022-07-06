@@ -2,14 +2,15 @@ import React, { useState }  from "react";
 import {View, Text, TextInput, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
 import {LargeButton} from "../components/LargeButton";
 import { auth } from "../firebase";
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from "@react-navigation/native";
 
 // import {themeColor} from "../App.js";
 
-const SignupPage = ({ navigation }) => {
+const SignupPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const navigation = useNavigation()
 
     const handleSignUp = () => {
         auth
@@ -64,7 +65,7 @@ const SignupPage = ({ navigation }) => {
                 <Button
                     title = {"Login"}
                     color = {"dimgrey"}
-                    onPress = { navigation.navigate('Login')}   //Add Login navigation
+                    onPress = { () => navigation.navigate('Login') }   //Add Login navigation
                 >
                 </Button>
             </View>

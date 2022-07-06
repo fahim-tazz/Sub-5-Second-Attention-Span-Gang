@@ -1,4 +1,5 @@
-import React, { useState }  from "react";
+import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState }  from "react";
 import {View, Text, TextInput, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
 import {LargeButton} from "../components/LargeButton";
 import { auth } from "../firebase";
@@ -9,12 +10,24 @@ const LoginPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleSignUp = () => {
+    const navigation = useNavigation()
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) {
+                navigation.navigate("Search")
+            }
+        })
+
+        return unsubscribe
+    }, [])
+
+    const handleLogin = () => {
         auth
-            .createUserWithEmailAndPassword(email, password)
+            .signInWithEmailAndPassword(email, password)
             .then(userCredentials => {
                 const user = userCredentials.user;
-                console.log(user.email);
+                console.log("Logged in as:", user.email);
             })
             .catch(error => alert(error.message))
     }
@@ -50,7 +63,7 @@ const LoginPage = () => {
                 
                 <LargeButton 
                     buttonName = {"Log in"}
-                    onPress = {handleSignUp}
+                    onPress = {handleLogin}
                     style = {styles.loginButton}  //Add login functionality
                 />
                 <Button
@@ -67,7 +80,7 @@ const LoginPage = () => {
                 <Button
                     title = {"Sign up"}
                     color = {"dimgrey"}
-                    onPress = {() => console.log("sign up page")}   //Add signup navigation
+                    onPress = { () => navigation.navigate('Signup')}   //Add signup navigation
                 >
 
                 </Button>
