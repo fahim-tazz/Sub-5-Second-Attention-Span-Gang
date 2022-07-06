@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState }  from "react";
 import {View, Text, TextInput, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
 import {LargeButton} from "../components/LargeButton";
+import { auth } from "../firebase";
 
 // import {themeColor} from "../App.js";
 
-
 const LoginPage = () => {
-    
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleSignUp = () => {
+        auth
+            .createUserWithEmailAndPassword(email, password)
+            .then(userCredentials => {
+                const user = userCredentials.user;
+                console.log(user.email);
+            })
+            .catch(error => alert(error.message))
+    }
+
     // const styles = makestyle(useWindowDimensions().fontScale)
     return (
         <View style = {styles.mainContainer}>
@@ -24,17 +36,21 @@ const LoginPage = () => {
                     placeholderTextColor = {"#6d6d6d"}
                     keyboardType = {"email-address"}
                     autoCapitalize = {"none"}
+                    onChangeText = { text => setEmail(text) }
+                    value = {email}
                 />
                 <TextInput 
                     style = {[styles.inputBox, styles.inputPlaceholderText]}
                     placeholder = {"Enter your password"}
                     placeholderTextColor = {"#6d6d6d"}
                     secureTextEntry = {true}
+                    onChangeText = { text => setPassword(text) }
+                    value = {password}
                 />
                 
                 <LargeButton 
                     buttonName = {"Log in"}
-                    onPress = {() => console.log("logged in")}
+                    onPress = {handleSignUp}
                     style = {styles.loginButton}  //Add login functionality
                 />
                 <Button
