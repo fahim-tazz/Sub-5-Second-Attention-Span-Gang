@@ -7,6 +7,7 @@ import { LandingPage} from "./pages/LandingPage";
 import { LoginPage} from './pages/LoginPage';
 import { SearchPage } from "./pages/SearchPage";
 import { SignupPage } from './pages/SignupPage';
+import { ProfilePage } from './pages/ProfilePage';
 
 
 
@@ -16,7 +17,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
           <Stack.Screen name = "Login" component = {LoginPage} options = {navOptions.loginPage}/>
-          <Stack.Screen name = "Search" component = {SearchPage} options = {navOptions.landingPage}/>
+          <Stack.Screen name = "Profile" component = {ProfilePage} options = {navOptions.profilePage}/>
+          <Stack.Screen name = "Search" component = {SearchPage} options = {navOptions.searchPage}/>
           <Stack.Screen name = "Signup" component = {SignupPage} options = {navOptions.signupPage}/>
       </Stack.Navigator>
     </NavigationContainer>
@@ -32,6 +34,12 @@ const navOptions = {
   },
   signupPage: {
     headerShown: false,
+  },
+  profilePage: {
+    headerShown: false,
+  },
+  searchPage: {
+    headerShown: true,
   }
 }
 

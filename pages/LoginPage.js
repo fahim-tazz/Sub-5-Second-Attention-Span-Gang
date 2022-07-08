@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState }  from "react";
 import {View, Text, TextInput, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
 import {LargeButton} from "../components/LargeButton";
@@ -15,7 +15,7 @@ const LoginPage = () => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
-                navigation.navigate("Search")
+                navigation.navigate("Profile")
             }
         })
 
@@ -80,7 +80,7 @@ const LoginPage = () => {
                 <Button
                     title = {"Sign up"}
                     color = {"dimgrey"}
-                    onPress = { () => navigation.navigate('Signup')}   //Add signup navigation
+                    onPress = { () => navigation.navigate("Signup")}   //Add signup navigation
                 >
 
                 </Button>
