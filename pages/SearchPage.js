@@ -1,11 +1,15 @@
 import React, {useState} from "react";
-import {View, Text, Button, StyleSheet, TextInput, useWindowDimensions} from "react-native";
+import {View, Image, FlatList, ScrollView, Text, Button, StyleSheet, TextInput, useWindowDimensions} from "react-native";
 import {LargeButton} from "../components/LargeButton";
 import axios from 'axios';
-import { FlatList } from "react-native-web";
 
 const SearchPage = () => {
     // const styles = makestyle(useWindowDimensions().fontScale)
+
+    let books = [];
+
+    const [searchedBooks, setSearchedBooks] = useState([]);
+
     const [searchTerm, setSearchTerm] = useState();
 
     const searchHandler = (query) => {
@@ -17,8 +21,11 @@ const SearchPage = () => {
           `https://www.googleapis.com/books/v1/volumes?q=${text}&startIndex=0&maxResults=10`
         )
         .catch(err => console.err(err));
-        res.data.items.map(book => console.log(book.volumeInfo.title));
+        //res.data.items.map(item => console.log(item.volumeInfo.title)); // test to see output
+        books = res.data.items.map(item => item.volumeInfo);
+        setSearchedBooks(books);
     };
+
 
     return (
         <View style = {styles.mainContainer}>
@@ -31,6 +38,21 @@ const SearchPage = () => {
                         onPress = {() => searchBooks(searchTerm)} //Pass to Google Books API
                         style = {styles.searchButton}
                     />
+            <FlatList
+                data = {searchedBooks}
+                numColumns = {2}
+                renderItem = {(book) => {
+                    console.log(book.item.title);
+                    return(
+                        <View style = {{height: '5%'}}>
+                        <Image style={styles.poster}
+                            source={{
+                            uri: book.item.imageLinks.smallThumbnail,
+                            }} />
+                        </View>
+                    )
+                }}
+            />
         </View>
     )
 }
@@ -42,9 +64,15 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         flex: 1
     },
+    searchContainer: {
+        alignItems: "left",
+        backgroundColor: "white",
+        flexDirection: "column",
+        padding: 10
+    },
     searchBar: {
         backgroundColor: "#ebebeb",
-        flex: 0.1,
+        height: "10%",
         width: "80%",
         borderWidth: 1.5,
         paddingLeft: "4%",
@@ -56,7 +84,12 @@ const styles = StyleSheet.create({
         fontSize: 19
     },
     searchButton: {
-        flex: 0.07,
+        height: "5%"
+    },
+    poster:{
+        width: 150,
+        height: 215,
+        margin:5
     }
 });
 
