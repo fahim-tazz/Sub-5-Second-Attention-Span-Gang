@@ -1,11 +1,15 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState }  from "react";
-import {View, Text, TouchableOpacity, TextInput, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
+import {View, Text, ActivityIndicator, TouchableOpacity, FlatList, TextInput, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
 import {LargeButton} from "../components/LargeButton";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 
 const ProfilePage = () => {
   const navigation = useNavigation()
+
+  const [loading, setLoading] = useState(true); 
+
+  const [userBooks, setUserBooks] = useState([]);
 
   const handleSignOut = () => {
     auth
@@ -15,6 +19,30 @@ const ProfilePage = () => {
       })
       .catch(error => alert(error.message))
   }
+
+  useEffect(() => {
+        db.collection("UserLibraryBooks").where("userID","==",auth.currentUser?.email)
+        .get()
+        .then((querySnapshot) => {
+            const books = [];
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+                books.push(doc.data().book);
+            });
+            setUserBooks(books);
+            setLoading(false);
+        })
+        .catch((error) => {
+            console.log("Error getting documents: ", error);
+        })
+
+    }, [])
+    
+    if (loading) {
+        return <ActivityIndicator />;
+    }
+    
 
   return (
     <View style = {styles.mainContainer}>
@@ -30,6 +58,21 @@ const ProfilePage = () => {
         >
         <Text style={styles.buttonText}>Sign out</Text>
         </TouchableOpacity>
+        <FlatList
+        data={userBooks}
+        numColumns = {2}
+        renderItem = {(book) => {
+            console.log(book);
+            return(
+                <View style = {{height: '5%'}}>
+                <Image style={styles.poster}
+                    source={{
+                    uri: book.item.imageLinks.smallThumbnail,
+                    }} />
+                </View>
+            )
+        }}
+        />
     </View>
     )
 }
@@ -43,6 +86,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#dbb49c",
         flexDirection: "column",
         flex: 1
+    },
+    poster:{
+        width: 150,
+        height: 215,
+        margin:5
     }
 });
 

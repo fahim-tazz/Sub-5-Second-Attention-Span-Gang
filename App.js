@@ -8,6 +8,7 @@ import { LoginPage} from './pages/LoginPage';
 import { SearchPage } from "./pages/SearchPage";
 import { SignupPage } from './pages/SignupPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { DescriptionPage } from './pages/DescriptionPage';
 
 
 
@@ -20,6 +21,7 @@ export default function App() {
           <Stack.Screen name = "Profile" component = {ProfilePage} options = {navOptions.profilePage}/>
           <Stack.Screen name = "Search" component = {SearchPage} options = {navOptions.searchPage}/>
           <Stack.Screen name = "Signup" component = {SignupPage} options = {navOptions.signupPage}/>
+          <Stack.Screen name = "Description" component= {DescriptionPage} options = {navOptions.searchPage}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

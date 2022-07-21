@@ -1,5 +1,6 @@
+import { useNavigation } from "@react-navigation/core";
 import React, {useState} from "react";
-import {View, Image, FlatList, ScrollView, Text, Button, StyleSheet, TextInput, useWindowDimensions} from "react-native";
+import {View, Image, FlatList, TouchableHighlight, ScrollView, Text, Button, StyleSheet, TextInput, useWindowDimensions} from "react-native";
 import {LargeButton} from "../components/LargeButton";
 import axios from 'axios';
 
@@ -7,6 +8,8 @@ const SearchPage = () => {
     // const styles = makestyle(useWindowDimensions().fontScale)
 
     let books = [];
+
+    const navigation = useNavigation()
 
     const [searchedBooks, setSearchedBooks] = useState([]);
 
@@ -26,6 +29,10 @@ const SearchPage = () => {
         setSearchedBooks(books);
     };
 
+    const moveToDescription = (book) => {
+        navigation.navigate("Description", {book : book})
+    }
+
 
     return (
         <View style = {styles.mainContainer}>
@@ -42,13 +49,14 @@ const SearchPage = () => {
                 data = {searchedBooks}
                 numColumns = {2}
                 renderItem = {(book) => {
-                    console.log(book.item.title);
                     return(
                         <View style = {{height: '5%'}}>
+                        <TouchableHighlight onPress = {() => moveToDescription(book.item)}>
                         <Image style={styles.poster}
                             source={{
                             uri: book.item.imageLinks.smallThumbnail,
                             }} />
+                        </TouchableHighlight>
                         </View>
                     )
                 }}
