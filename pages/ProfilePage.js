@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState }  from "react";
-import {View, Text, ActivityIndicator, TouchableOpacity, FlatList, TextInput, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
+import {View, Text, ActivityIndicator, TouchableOpacity, FlatList, TouchableHighlight, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
 import {LargeButton} from "../components/LargeButton";
 import { auth, db } from "../firebase";
 
@@ -26,7 +26,6 @@ const ProfilePage = () => {
         .then((querySnapshot) => {
             const books = [];
             querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
                 console.log(doc.id, " => ", doc.data());
                 books.push(doc.data().book);
             });
@@ -42,8 +41,11 @@ const ProfilePage = () => {
     if (loading) {
         return <ActivityIndicator />;
     }
-    
 
+    const moveToDescription = (book) => {
+        navigation.navigate("Description", {book : book})
+    }
+    
   return (
     <View style = {styles.mainContainer}>
         <Text>Email: {auth.currentUser?.email}</Text>
@@ -65,10 +67,12 @@ const ProfilePage = () => {
             console.log(book);
             return(
                 <View style = {{height: '5%'}}>
+                <TouchableHighlight onPress = {() => moveToDescription(book.item)}>
                 <Image style={styles.poster}
                     source={{
                     uri: book.item.imageLinks.smallThumbnail,
                     }} />
+                </TouchableHighlight>
                 </View>
             )
         }}
@@ -79,7 +83,7 @@ const ProfilePage = () => {
 
 const styles = StyleSheet.create({
     searchButton: {
-        flex: 0.07,
+        height: '5%',
     },
     mainContainer: {
         alignItems: "center",
