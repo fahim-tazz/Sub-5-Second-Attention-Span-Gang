@@ -1,5 +1,5 @@
-import { useNavigation } from "@react-navigation/core";
-import React, { useEffect, useState }  from "react";
+import { useNavigation, useFocusEffect } from "@react-navigation/core";
+import React, { useState }  from "react";
 import {View, Text, ActivityIndicator, TouchableOpacity, FlatList, TouchableHighlight, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
 import {LargeButton} from "../components/LargeButton";
 import { auth, db } from "../firebase";
@@ -20,13 +20,12 @@ const ProfilePage = () => {
       .catch(error => alert(error.message))
   }
 
-  useEffect(() => {
+  useFocusEffect(React.useCallback(() => {
         db.collection("UserLibraryBooks").where("userID","==",auth.currentUser?.email)
         .get()
         .then((querySnapshot) => {
             const books = [];
             querySnapshot.forEach((doc) => {
-                console.log(doc.id, " => ", doc.data());
                 books.push(doc.data().book);
             });
             setUserBooks(books);
@@ -36,7 +35,7 @@ const ProfilePage = () => {
             console.log("Error getting documents: ", error);
         })
 
-    }, [])
+    }, []))
     
     if (loading) {
         return <ActivityIndicator />;
@@ -64,7 +63,6 @@ const ProfilePage = () => {
         data={userBooks}
         numColumns = {2}
         renderItem = {(book) => {
-            console.log(book);
             return(
                 <View style = {{height: '5%'}}>
                 <TouchableHighlight onPress = {() => moveToDescription(book.item)}>

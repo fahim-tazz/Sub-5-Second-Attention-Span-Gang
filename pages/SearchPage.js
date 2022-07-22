@@ -54,7 +54,7 @@ const SearchPage = () => {
                         <TouchableHighlight onPress = {() => moveToDescription(book.item)}>
                         <Image style={styles.poster}
                             source={{
-                            uri: book.item.imageLinks.smallThumbnail,
+                            uri: book.item.imageLinks?.smallThumbnail,
                             }} />
                         </TouchableHighlight>
                         </View>
