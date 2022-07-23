@@ -69,7 +69,7 @@ const LoginPage = () => {
                 <Button
                     title = {"Forgot Password?"}
                     color = {"dimgrey"}
-                    onPress = {() => console.log("forgot password!")}  //Add forgot password page navigation
+                    onPress = {() => navigation.navigate("ForgotPassword")}  //Add forgot password page navigation
                 />
 
             </View>

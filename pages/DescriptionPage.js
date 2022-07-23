@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View, Image, Button, ScrollView} from 'rea
 import React, { useState }  from "react";
 import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import { auth, db } from "../firebase";
-import { doc, collection, set } from "firebase/firestore";
+import { doc, collection, set, listDocuments } from "firebase/firestore";
 import {Slider} from '@miblanchard/react-native-slider';
 import { Animated } from 'react-native';
 import { Rating } from 'react-native-ratings';
@@ -12,10 +12,15 @@ const DescriptionPage = (book) => {
 
     const navigation = useNavigation();
 
+    const [added, setAdded] = useState(false);
+
     const [button, setButton] = useState();
 
     const [slider, setSlider] = useState(0);
-    const [text, onChangeText] = React.useState("Annotations");
+
+    const [rating, setRating] = useState(0);
+
+    const [text, onChangeText] = React.useState("");
 
     const addToLibrary = async (bookdetails) => {
         try {
@@ -23,7 +28,8 @@ const DescriptionPage = (book) => {
             .doc(auth.currentUser?.email + bookdetails.title).set({
                 userID: auth.currentUser?.email,
                 book: bookdetails,
-                progress: 0
+                progress: 0,
+                userRating: 0
               });
           } catch (e) {
             console.error("Error adding document: ", e);
@@ -38,6 +44,21 @@ const DescriptionPage = (book) => {
             .doc(auth.currentUser?.email 
                 + bookDetails.title)
             .delete()
+            
+            const annotationRef = await db.collection("UserAnnotations")
+            .where("userID","==",auth.currentUser?.email)
+            .where("book.title","==",book.route.params.book.title)
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                    db.collection("UserAnnotations")
+                    .doc(auth.currentUser?.email 
+                        + book.route.params.book.title 
+                        + doc.data().progress[0]).delete()
+                }
+                )
+            }
+            )
           } catch (e) {
             console.error("Error removing document: ", e);
           }
@@ -47,23 +68,72 @@ const DescriptionPage = (book) => {
     const updatePages = async (pages) => {
         try {
             setSlider(pages)
+            setRating(rating);
             const docRef = await db.collection("UserLibraryBooks")
             .doc(auth.currentUser?.email 
                 + book.route.params.book.title)
             .update({
                 userID: auth.currentUser?.email,
                 book: book.route.params.book,
-                progress: pages
+                progress: pages,
+                userRating: rating
+              })
+              showAnnotation()
+        } catch (e) {
+            console.error("Error updating pages read: ", e);
+        }
+    }
+
+    const updateRating = async (rate) => {
+        try {
+            setRating(rate)
+            setSlider(slider);
+            const docRef = await db.collection("UserLibraryBooks")
+            .doc(auth.currentUser?.email 
+                + book.route.params.book.title)
+            .update({
+                userID: auth.currentUser?.email,
+                book: book.route.params.book,
+                progress: slider,
+                userRating: rate
               })
         } catch (e) {
             console.error("Error updating pages read: ", e);
         }
     }
 
+    const addAnnotation = async (thought) => {
+        try {
+            const docRef = await db.collection("UserAnnotations")
+            .doc(auth.currentUser?.email 
+                + book.route.params.book.title 
+                + slider)
+            .set({
+                userID: auth.currentUser?.email,
+                book: book.route.params.book,
+                progress: slider,
+                annotation: thought
+              })
+        } catch (e) {
+            console.error("Error updating pages read: ", e);
+        }
+    }
+
+    const showAnnotation = async () => {
+        await db.collection("UserAnnotations")
+        .doc(auth.currentUser?.email 
+        + book.route.params.book.title 
+        + slider)
+        .get()
+        .then(querySnapshot => {
+        if(!querySnapshot.empty){
+            onChangeText(querySnapshot.data().annotation)
+        }})
+    }
+
     
     useFocusEffect(React.useCallback(() => {
     let comp;
-    let slider;
     var query = db.collection("UserLibraryBooks").where("book.title", "==", book.route.params.book.title)
     .where("userID", "==", auth.currentUser?.email).get()
     .then(querySnapshot => {
@@ -73,19 +143,45 @@ const DescriptionPage = (book) => {
               setButton(comp);
              }
     else {
-        console.log(querySnapshot.docs[0].data().progress);
       comp = <Button title = "Remove from Library"
               onPress={() => removeBookFromLibrary(book.route.params.book)}/>
               setButton(comp)
               setSlider(querySnapshot.docs[0].data().progress)
+              setRating(querySnapshot.docs[0].data().userRating)
+              setAdded(true)
     }
     })
+
+    var currAnnotation = db.collection("UserAnnotations")
+    .doc(auth.currentUser?.email 
+        + book.route.params.book.title 
+        + slider)
+    .get()
+    .then(querySnapshot => {
+        if(!querySnapshot.empty){
+            onChangeText(querySnapshot.data().annotation)
+        }
+    }
+    )
     }, []))
 
+    if(!added) {
+        return (
+            <ScrollView contentInset = {{top: 10, left: 10, bottom: 80, right: 10}}>
+              <Text>{book.route.params.book.title}</Text>
+              <Text>Author: {book.route.params.book.authors[0]}</Text>
+              <Text>Rating: {book.route.params.book.averageRating}</Text>
+              <Image style = {styles.poster}
+                source = {{uri: book.route.params.book.imageLinks.thumbnail}}
+              />
+              <Text style = {{height: '20%'}}>{book.route.params.book.description}</Text>
+              {button}
+            </ScrollView>
+          )
 
-
+    } else {
   return (
-    <ScrollView>
+    <ScrollView contentInset = {{top: 10, left: 10, bottom: 80, right: 10}}>
       <Text>{book.route.params.book.title}</Text>
       <Text>Author: {book.route.params.book.authors[0]}</Text>
       <Text>Rating: {book.route.params.book.averageRating}</Text>
@@ -96,9 +192,12 @@ const DescriptionPage = (book) => {
       <Text>Your Rating:</Text>
       <Rating
         style={{ paddingVertical: 10 }}
+        startingValue={rating}
+        onFinishRating = {updateRating}
       />
       <Slider
         value={slider}
+        startingValue={slider}
         maximumValue={book.route.params.book.pageCount}
         step={1}
         onValueChange={(value) => updatePages(value)}
@@ -111,9 +210,13 @@ const DescriptionPage = (book) => {
         value={text}
         placeholder="Annotations"
         />
+        <Button title = "Save Annotation for current page" 
+        onPress={() => addAnnotation(text)}
+        />
       {button}
     </ScrollView>
   )
+    }
 }
 
 const styles = StyleSheet.create({
