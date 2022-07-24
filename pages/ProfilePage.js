@@ -1,6 +1,6 @@
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import React, { useState }  from "react";
-import {View, Text, ActivityIndicator, TouchableOpacity, FlatList, TouchableHighlight, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
+import {View, SafeAreaView, Text, ActivityIndicator, TouchableOpacity, FlatList, TouchableHighlight, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
 import {LargeButton} from "../components/LargeButton";
 import { auth, db } from "../firebase";
 
@@ -46,7 +46,7 @@ const ProfilePage = () => {
     }
     
   return (
-    <View style = {styles.mainContainer}>
+    <SafeAreaView style = {styles.mainContainer}>
         <Text>Email: {auth.currentUser?.email}</Text>
         <LargeButton 
                         buttonName = {"Search and add titles"} 
@@ -75,7 +75,7 @@ const ProfilePage = () => {
             )
         }}
         />
-    </View>
+    </SafeAreaView>
     )
 }
 
