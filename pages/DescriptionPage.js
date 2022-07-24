@@ -20,7 +20,7 @@ const DescriptionPage = (book) => {
 
     const [rating, setRating] = useState(0);
 
-    const [text, onChangeText] = React.useState("");
+    const [text, onChangeText] = useState("");
 
     const addToLibrary = async (bookdetails) => {
         try {
@@ -115,7 +115,7 @@ const DescriptionPage = (book) => {
                 annotation: thought
               })
         } catch (e) {
-            console.error("Error updating pages read: ", e);
+            console.error("Error updating annotation: ", e);
         }
     }
 
@@ -152,10 +152,11 @@ const DescriptionPage = (book) => {
               setSlider(querySnapshot.docs[0].data().progress)
               setRating(querySnapshot.docs[0].data().userRating)
               setAdded(true)
+              showAnnotation()
     }
     })
 
-    showAnnotation()
+
     }, []))
 
     if(!added) {
@@ -195,6 +196,7 @@ const DescriptionPage = (book) => {
         step={1}
         onValueChange={(value) => updatePages(value)}
         style = {{width: "50%"}}
+        trackClickable ={false}
         />
         <Text>Pages Read: {slider} / {book.route.params.book.pageCount}</Text>
         <TextInput

@@ -15,7 +15,7 @@ const LoginPage = () => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
-                navigation.navigate("Profile")
+                navigation.navigate("MyTabs")
             }
         })
 
