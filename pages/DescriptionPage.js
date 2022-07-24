@@ -126,8 +126,11 @@ const DescriptionPage = (book) => {
         + slider)
         .get()
         .then(querySnapshot => {
-        if(!querySnapshot.empty){
+        if(querySnapshot.exists && !querySnapshot.empty){
             onChangeText(querySnapshot.data().annotation)
+        }
+        else{
+            onChangeText("")
         }})
     }
 
@@ -152,17 +155,7 @@ const DescriptionPage = (book) => {
     }
     })
 
-    var currAnnotation = db.collection("UserAnnotations")
-    .doc(auth.currentUser?.email 
-        + book.route.params.book.title 
-        + slider)
-    .get()
-    .then(querySnapshot => {
-        if(!querySnapshot.empty){
-            onChangeText(querySnapshot.data().annotation)
-        }
-    }
-    )
+    showAnnotation()
     }, []))
 
     if(!added) {
