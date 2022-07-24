@@ -1,8 +1,28 @@
 # Sub-5-Second-Attention-Span-Gang
-Orbital Project 2022
+# Orbital Project 2022 - Readit
 
-Motivation 
+## Motivation 
+We wanted to provide a solution for users to search for books, and curate their own collection of books, complete with their thoughts and reviews on each book, to make reading books more rewarding.
 
+### Features
+1. Login and Signup with email.
+2. Search for books in Google Books' extensive library. 
+3. Add books to your own collection.
+4. Record your reading progress for each book.
+5. Annotate your thoughts for each book.
+
+### Tech Stack
+1. React Native
+2. Firebase (for authentication and user book collection)
+3. Google Books API
+
+### Testing
+1. Unit Testing: during every stage of development, all components were tested individually before pushing to Github.
+2. System Testing: after a working prototype was ready, we tested the whole app in its entirety to ensure all moving parts interact well with each other.
+3. Fuzz Testing: any functionality that involves taking in input was tested with invalid inputs to test error handling .
+
+
+# Old
 You used to be an avid reader as a kid, but now, staring at a page for more than 5 minutes feels like a chore. There are just better, more gratifying things to do with your very limited time now, like social media, Netflix, and anime. But what if there was a way to fuel an intrinsic need to finish that one novel you could never get through? What if this was the book that reignites your long-lost love for reading?
 
 Losing interest in reading is far too common as we enter adulthood. We miss out on the numerous psychological benefits of reading, as well as its sheer joy. While many of us want to start reading again, we simply lack the drive to begin. Research shows that friends can play a major role in making us go to the gym more often (even when it feels like a chore, just like reading). Be it through inspiration or competitiveness, we want to make a platform for everyone to start reading together.
