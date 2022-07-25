@@ -1,6 +1,6 @@
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import React, { useState }  from "react";
-import {View, Text, ActivityIndicator, TouchableOpacity, FlatList, TouchableHighlight, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
+import {View, SafeAreaView, Text, ActivityIndicator, TouchableOpacity, FlatList, TouchableHighlight, StyleSheet, Image, Button, useWindowDimensions} from "react-native";
 import {LargeButton} from "../components/LargeButton";
 import { auth, db, storage } from "../firebase";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -90,6 +90,7 @@ const ProfilePage = () => {
         </View>
         <View style = {styles.body}>
         <FlatList
+        contentInset = {{top: 0, left: 0, bottom: 250, right: 0}}
         data={userBooks}
         numColumns = {2}
         renderItem = {(book) => {
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#DCDCDC",
     },
     headerContent:{
-        padding:30,
+        padding:10,
         alignItems: 'center',
     },
     body:{
