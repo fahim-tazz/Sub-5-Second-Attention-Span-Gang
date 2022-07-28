@@ -202,6 +202,9 @@ const DescriptionPage = (book) => {
         onChangeText={onChangeText}
         value={text}
         placeholder="Annotations"
+        multiline = {true}
+        textAlign={"left"}
+        textAlignVertical={"top"}
         />
         <Button title = "Save Annotation for current page" 
         onPress={() => addAnnotation(text)}
