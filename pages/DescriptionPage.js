@@ -54,7 +54,7 @@ const DescriptionPage = (book) => {
                     db.collection("UserAnnotations")
                     .doc(auth.currentUser?.email 
                         + book.route.params.book.title 
-                        + doc.data().progress[0]).delete()
+                        + doc.data().progress).delete()
                 }
                 )
             }
@@ -67,8 +67,6 @@ const DescriptionPage = (book) => {
 
     const updatePages = async (pages) => {
         try {
-            setSlider(pages)
-            setRating(rating);
             const docRef = await db.collection("UserLibraryBooks")
             .doc(auth.currentUser?.email 
                 + book.route.params.book.title)
@@ -78,7 +76,7 @@ const DescriptionPage = (book) => {
                 progress: pages,
                 userRating: rating
               })
-              showAnnotation()
+              showAnnotation(slider)
         } catch (e) {
             console.error("Error updating pages read: ", e);
         }
@@ -86,8 +84,6 @@ const DescriptionPage = (book) => {
 
     const updateRating = async (rate) => {
         try {
-            setRating(rate)
-            setSlider(slider);
             const docRef = await db.collection("UserLibraryBooks")
             .doc(auth.currentUser?.email 
                 + book.route.params.book.title)
@@ -119,11 +115,11 @@ const DescriptionPage = (book) => {
         }
     }
 
-    const showAnnotation = async () => {
+    const showAnnotation = async (pages) => {
         await db.collection("UserAnnotations")
         .doc(auth.currentUser?.email 
         + book.route.params.book.title 
-        + slider)
+        + pages)
         .get()
         .then(querySnapshot => {
         if(querySnapshot.exists && !querySnapshot.empty){
@@ -152,7 +148,7 @@ const DescriptionPage = (book) => {
               setSlider(querySnapshot.docs[0].data().progress)
               setRating(querySnapshot.docs[0].data().userRating)
               setAdded(true)
-              showAnnotation()
+              showAnnotation(querySnapshot.docs[0].data().progress)
     }
     })
 
@@ -188,13 +184,15 @@ const DescriptionPage = (book) => {
         style={{ paddingVertical: 10 }}
         startingValue={rating}
         onFinishRating = {updateRating}
+        onSwipeRating = {setRating}
       />
       <Slider
         value={slider}
         startingValue={slider}
         maximumValue={book.route.params.book.pageCount}
         step={1}
-        onValueChange={(value) => updatePages(value)}
+        onValueChange={setSlider}
+        onSlidingComplete={(value) => updatePages(value)}
         style = {{width: "50%"}}
         trackClickable ={false}
         />
